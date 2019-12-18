@@ -9,7 +9,7 @@ def hello_world():
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
     if request.method == 'POST':
-        with open('sakshi.png', 'wb') as f:
+        with open('images/sakshi.png', 'wb') as f:
             data = b64.b64decode(request.form['data'])
             f.write(data)
         return 'Image Saved!'

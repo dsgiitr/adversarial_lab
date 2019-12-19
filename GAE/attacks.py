@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 
 
-__all__ = ['fgsm', 'fgsm_targeted', 'basic_iterative', 'iterative_ll_class', 'deep_fool']
+__all__ = ['fgsm', 'fgsm_targeted', 'basic_iterative', 'iterative_ll_class', 'deep_fool', 'lbfgs']
 
 def fgsm( model, image, epsilon, device=torch.device('cpu')):
 	"""Generates Adv Examples for the Batch"""
@@ -147,6 +147,44 @@ def deep_fool( model, image, max_iter=10, device=torch.device('cpu')):
         i = i + 1
     original_output, output = original_output.detach(), output.detach()
     return original_output, output, xi.detach()
+
+def lbfgs(model, image, target, c=1e-2, bin_search_steps=5, max_iter=10, const_upper=1, device=torch.device('cpu')):
+    """Generates Adv Examples for the Batch"""
+    image, target = image.to(device), target.to(device)
+    model = model.to(device)
+    original_output = model(image)
+    _, out_label = torch.max(original_output, 0)
+    r = torch.empty(image.shape).uniform_()
+    r_old = r.clone().requires_grad_(False)
+    r.requires_grad_()
+    optimizer = torch.optim.LBFGS([r], max_iter=max_iter)
+    
+    const_lower = 0
+    const_upper = const_upper
+    
+    for i in range(bin_search_steps):
+        def closure():
+            optimizer.zero_grad()
+            output = model(image+r)
+            loss = c*F.cross_entropy(output, target) + torch.sum(r**2) #or torch.sum(torch.abs(r))
+            loss.backward()
+            return loss
+            #model.zero_grad() TODO:Should it be here?
+        optimizer.step(closure)
+        _, out_label = torch.max(model(image+r), 1) 
+        if(torch.sum(r**2).item()<torch.sum(r_old**2).item() and target.item()==out_label.item()):
+                r_old = r.clone().detach().requires_grad_(False)
+        if(target.item()==out_label.item()):
+            const_upper = min(const_upper, c)
+            c = (const_upper+const_lower)/2
+        else:
+            const_lower = max(const_lower, c)
+            c = (const_upper+const_lower)/2
+    r.requires_grad = False    
+    perturbed_output = model(image+r_old)
+    perturbed_image = image+r_old
+    original_output, perturbed_output = original_output.detach(), perturbed_output.detach()
+    return original_output, perturbed_output, perturbed_image.detach()
 
 def clip(clean_image, per_image, eps):
 	per_image = torch.max(clean_image-eps, torch.min(clean_image+eps, per_image))

@@ -153,7 +153,7 @@ def lbfgs(model, image, target, c=1e-2, bin_search_steps=5, max_iter=10, const_u
     image, target = image.to(device), target.to(device)
     model = model.to(device)
     original_output = model(image)
-    _, out_label = torch.max(original_output, 0)
+    _, out_label = torch.max(original_output, 1)
     r = torch.empty(image.shape).uniform_()
     r_old = r.clone().requires_grad_(False)
     r.requires_grad_()

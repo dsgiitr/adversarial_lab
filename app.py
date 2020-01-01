@@ -1,12 +1,13 @@
 ﻿import os
 import io
 
-from flask import Flask, request, render_template, redirect, jsonify
+from flask import Flask, request, render_template, redirect, jsonify, Response
 import base64 as b64
 
 import commons
 from attack import fgsm_untargeted
 import torch
+import cv2
 
 app = Flask(__name__ , template_folder='template')
 
@@ -32,10 +33,10 @@ def upload_file():
         if not file:
             return 0
         img_bytes = file.read()
-        top5_original, top5_perturbed, perturbed_image = fgsm_untargeted(img_bytes, epsilon, device=torch.device('cpu'))
-        #class_id, class_name = get_prediction(image_bytes=img_bytes)
-        #return render_template('result.html', class_id=class_id,
-        #                       class_name=class_name)
-        #response = app.response_class(response)
-        return jsonify({'original':top5_original,'perturbed':top5_perturbed,'perturbed_image':perturbed_image})#, jsonify(top5_perturbed)#, perturbed_image #render_template('index.html')
+        top5_original, top5_perturbed, perturbed_image, original_image = fgsm_untargeted(img_bytes, epsilon, device=torch.device('cpu'))
+        per_data = cv2.imencode('.jpg', perturbed_image)[1]
+        per_data = b64.b64encode(per_data).decode("utf-8")
+        or_data = cv2.imencode('.jpg', perturbed_image)[1]
+        or_data = b64.b64encode(or_data).decode("utf-8")
+        return jsonify({'original':top5_original,'perturbed':top5_perturbed, 'per_image':per_data, 'or_image':or_data})
 

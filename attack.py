@@ -23,5 +23,5 @@ def fgsm_untargeted(image_bytes, epsilon, device=torch.device('cpu')):
 	top5_original = [(imagenet_class_index[str(idx.item())][1], or_percentage[idx.item()].item()) for idx in or_indices[0][:5]]
 	top5_perturbed = [(imagenet_class_index[str(idx.item())][1], or_percentage[idx.item()].item()) for idx in per_indices[0][:5]]
 	perturbed_image = rev_transform(perturbed_image[0])
-
-	return dict(top5_original), dict(top5_perturbed), perturbed_image
+	original_image = rev_transform(tensor[0])
+	return dict(top5_original), dict(top5_perturbed), perturbed_image, original_image

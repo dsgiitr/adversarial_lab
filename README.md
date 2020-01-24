@@ -1,4 +1,4 @@
-##Adversarial Attack Visualization
+# Adversarial Attack Visualization
 Source code for the website and the project to generate adversarial examples to fool common Machine Learning models.
 
 This is the repository for Visualizing and Comparision of Various Adversarial Attacks on user Uploaded Images using a User-Friendly interface using the DNN framework Pytorch, using popular SOTA Pretrained `TorchVision`  ModelZoo. The Following Attacks have been implemented so far and code can be found inside `GAE/attacks.py`

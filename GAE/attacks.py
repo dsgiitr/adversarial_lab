@@ -7,25 +7,33 @@ import numpy as np
 __all__ = ['fgsm', 'fgsm_targeted', 'basic_iterative', 'iterative_ll_class', 'deep_fool', 'lbfgs']
 
 def fgsm( model, image, epsilon, device=torch.device('cpu')):
-	"""Generates Adv Examples for the Batch"""
-	image = image.to(device)
-	model = model.to(device)
-	image.requires_grad = True
-	original_output = model(image)
-	_, target = torch.max(original_output, 1)
-	loss = F.nll_loss(original_output, target)
-	model.zero_grad()
-	loss.backward()
+    """Implementation of Untargeted Fast Gradient Sign Method 
+    Paper Link:https://arxiv.org/abs/1412.6572"""
+    #Move tensors to Operation Device
+    image = image.to(device)
+    model = model.to(device)
 
-	data_grad = image.grad.data
+    #for Calculation of Gradient wrt the Image
+    image.requires_grad = True
 
-	perturbed_image = perturbe(image, epsilon, data_grad)
+    #True Target of Clean Image. To prevent Target Decay
+    original_output = model(image)
+    _, target = torch.max(original_output, 1)
 
-	perturbed_output = model(perturbed_image)
 
-	image.requires_grad = False
-	original_output, perturbed_output = original_output.detach(), perturbed_output.detach()
-	return original_output, perturbed_output, perturbed_image.detach()
+    loss = F.nll_loss(original_output, target)
+    model.zero_grad()
+    loss.backward()
+
+    data_grad = image.grad.data
+
+    perturbed_image = perturbe(image, epsilon, data_grad)
+
+    perturbed_output = model(perturbed_image)
+
+    image.requires_grad = False
+    original_output, perturbed_output = original_output.detach(), perturbed_output.detach()
+    return original_output, perturbed_output, perturbed_image.detach()
 
 # FGSM attack code
 def perturbe(image, epsilon, data_grad):

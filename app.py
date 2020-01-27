@@ -29,6 +29,14 @@ def basic_iterative():
 def iterative_ll_class():
     return render_template('iterative_ll_class.html')
 
+@app.route('/deep_fool', methods=['GET'])
+def deep_fool():
+    return render_template('deep_fool.html')
+
+@app.route('/lbfgs', methods=['GET'])
+def lbfgs():
+    return render_template('lbfgs.html')
+
 @app.route('/atk_fgsm_untargeted', methods=['POST'])
 def atk_fgsm_untargeted():
     if request.method == 'POST':
@@ -113,6 +121,50 @@ def atk_iterative_ll_class():
             return 0
         img_bytes = file.read()
         top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.iterative_ll_class( model, img_bytes, alpha, epsilon, num_iter, device=torch.device('cpu'))
+        or_data = commons.getb64str(original_image).decode()
+        perturbation_data = commons.getb64str(perturbation).decode()
+        per_data = commons.getb64str(perturbed_image).decode()
+        print('Success!')
+        return jsonify({'original':top5_original,'perturbed':top5_perturbed, 'per_image':per_data, 'or_image':or_data, 'perturbation':perturbation_data})
+
+@app.route('/atk_deep_fool', methods=['POST'])
+def atk_deep_fool():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            print("file not found")
+            return redirect(request.url)
+        file = request.files['file']
+        max_iter = int(request.form['max_iter'])
+        model = request.form['model']
+        if not file:
+            print('no file')
+            return 0
+        img_bytes = file.read()
+        top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.deep_fool( model, img_bytes, max_iter, device=torch.device('cuda'))
+        or_data = commons.getb64str(original_image).decode()
+        perturbation_data = commons.getb64str(perturbation).decode()
+        per_data = commons.getb64str(perturbed_image).decode()
+        print('Success!')
+        return jsonify({'original':top5_original,'perturbed':top5_perturbed, 'per_image':per_data, 'or_image':or_data, 'perturbation':perturbation_data})
+
+@app.route('/atk_lbfgs', methods=['POST'])
+def atk_lbfgs():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            print("file not found")
+            return redirect(request.url)
+        file = request.files['file']
+        max_iter = int(request.form['max_iter'])
+        target = int(request.form['target'])
+        bin_search_steps = int(request.form['bin_search_steps'])
+        c = float(request.form['c'])
+        model = request.form['model']
+        const_upper = float(request.form['const_upper'])
+        if not file:
+            print('no file')
+            return 0
+        img_bytes = file.read()
+        top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.lbfgs( model, img_bytes, target, c, bin_search_steps, max_iter, const_upper, device=torch.device('cpu'))
         or_data = commons.getb64str(original_image).decode()
         perturbation_data = commons.getb64str(perturbation).decode()
         per_data = commons.getb64str(perturbed_image).decode()

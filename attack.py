@@ -108,8 +108,6 @@ def deep_fool(model_inp, image_bytes, max_iter, device=torch.device('cpu')):
 	_, per_indices = torch.sort(perturbed_output, descending=True)
 	top5_original = [(imagenet_class_index[str(idx.item())][1], or_percentage[idx.item()].item()) for idx in or_indices[0][:5]]
 	top5_perturbed = [(imagenet_class_index[str(idx.item())][1], per_percentage[idx.item()].item()) for idx in per_indices[0][:5]]
-	print(top5_original)
-	print(top5_perturbed)
 	perturbed_image = rev_transform(perturbed_image[0])
 	original_image = rev_transform(tensor[0])
 	perturbation = rev_transform(per_tensor[0])

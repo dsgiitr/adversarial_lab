@@ -133,7 +133,7 @@
                   });
                 }
                 $('#del_label').text(function(i, origText){
-                    return origText + "Max Iterations : " + document.forms['upload-file'].elements['max_iter'].value;
+                    return origText + "Max Iterations : " + document.forms['upload-file'].elements['max_iter'].value + "\n" + "Target : " + document.forms['upload-file'].elements['target'].value + "\n"+ "Value of C : " + document.forms['upload-file'].elements['c'].value + "\n"+ "Binary Search Steps : " + document.forms['upload-file'].elements['bin_search_steps'].value + "\n"+ "Model : " + document.forms['upload-file'].elements['model'].value + "\n"+ "Const Upper Bound : " + document.forms['upload-file'].elements['const_upper'].value + "\n"; 
                   });
                 }
         });

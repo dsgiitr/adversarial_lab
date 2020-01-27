@@ -28,7 +28,7 @@
 <div class="row">
   <div class="col-md-9">
   <div class="container-fluid p-4 bg-dark text-white">
-    <div class="row text-white p-2" ><h4>Fast Gradient Sign Method (Untargeted)</h4> </div>
+    <div class="row text-white p-2" ><h4>Iterative Least-Likely Class Method (Target: Least- Likely Class)</h4> </div>
     <div class="row">
       <div class="col-sm" style="border-style: solid;border-width:1px;" ><img src="{{url_for('static', filename='or_image.png')}}" style="width:100%;height: auto;" id="or_image"></img>Original Image
         <div id='or_label'>
@@ -52,8 +52,16 @@
     <input type="file" class="form-control-file" name="file">
   </fieldset>
   <fieldset class="form-group">
+    <label for="alpha" >Alpha:</label>
+    <input type="text" class="form-control" name="alpha">
+  </fieldset>
+  <fieldset class="form-group">
     <label for="eps" >Epsilon:</label>
     <input type="text" class="form-control" name="eps">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="num_iter" >Iterations:</label>
+    <input type="text" class="form-control" name="num_iter">
   </fieldset>
  <fieldset class="form-group">
   <label for="model">Select Model:</label>
@@ -95,7 +103,7 @@
         var form_data = new FormData($('#upload-file')[0]);
         $.ajax({
             type: "POST",
-            url: '/atk_fgsm_untargeted',
+            url: '/atk_iterative_ll_class',
             data: form_data,
             contentType: false,
             cache: false,

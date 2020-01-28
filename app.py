@@ -13,6 +13,7 @@ from PIL import Image
 
 app = Flask(__name__ , template_folder='template')
 
+@app.route('/', methods=['GET'])
 @app.route('/fgsm_untargeted', methods=['GET'])
 def fgsm():
     return render_template('fgsm.html')
@@ -140,7 +141,7 @@ def atk_deep_fool():
             print('no file')
             return 0
         img_bytes = file.read()
-        top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.deep_fool( model, img_bytes, max_iter, device=torch.device('cuda'))
+        top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.deep_fool( model, img_bytes, max_iter, device=torch.device('cpu'))
         or_data = commons.getb64str(original_image).decode()
         perturbation_data = commons.getb64str(perturbation).decode()
         per_data = commons.getb64str(perturbed_image).decode()
@@ -164,7 +165,7 @@ def atk_lbfgs():
             print('no file')
             return 0
         img_bytes = file.read()
-        top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.lbfgs( model, img_bytes, target, c, bin_search_steps, max_iter, const_upper, device=torch.device('cuda'))
+        top5_original, top5_perturbed, perturbed_image, original_image, perturbation = attack.lbfgs( model, img_bytes, target, c, bin_search_steps, max_iter, const_upper, device=torch.device('cpu'))
         or_data = commons.getb64str(original_image).decode()
         perturbation_data = commons.getb64str(perturbation).decode()
         per_data = commons.getb64str(perturbed_image).decode()

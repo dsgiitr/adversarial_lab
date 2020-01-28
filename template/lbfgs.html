@@ -20,6 +20,22 @@
       <a class="nav-link" href="#">Link 1</a>
     </li>
   </ul> -->
+  <!-- <div class="dropdown-header">Dropdown header 1</div> -->
+  <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Dropdown link
+      </a>
+      <div class="dropdown-menu">
+        <div class="dropdown-header">Untargeted</div>
+        <a class="dropdown-item" href="/fgsm_untargeted">FGSM</a>
+        <a class="dropdown-item" href="/basic_iterative">Basic Iterative</a>
+        <a class="dropdown-item" href="/iterative_ll_class">Iterative Least Likely Class</a>
+        <a class="dropdown-item" href="/deep_fool">Deep Fool</a>
+        <div class="dropdown-header">Targeted</div>
+        <a class="dropdown-item" href="/fgsm_targeted">FGSM Targeted</a>
+        <a class="dropdown-item" href="/lbfgs">LBFGS</a>
+      </div>
+    </div>
   <a class="navbar-brand" href="github.com/dsgiitr/adversarial_gen_demo">
     <img src="{{url_for('static', filename='github-mark.png')}}" alt="Logo" style="width:30px;">
   </a>
@@ -90,10 +106,7 @@
 </div>
 </div>
 </div>
-<div class="jumbotron">
-  <h1>Bootstrap Tutorial</h1>
-  <p>Bootstrap is the most popular HTML, CSS...</p>
-</div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -122,6 +135,9 @@
                 $('#or_image').attr('src',"data:image/jpg;base64, " + data['or_image']);
                 $('#perturb').attr('src',"data:image/jpg;base64, " + data['perturbation']);
                 $('#perturbed').attr('src',"data:image/jpg;base64, " + data['per_image']);
+                $('#or_label').html('');
+                $('#per_label').html('');
+                $('#del_label').html('');
                 for (key in data['original']){
                   $('#or_label').text(function(i, origText){
                     return origText + key + " : "+data['original'][key].toPrecision(4)+"\n";

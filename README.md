@@ -16,7 +16,7 @@ Screenshots
 -----------
 
 ![Demo Image 1]
-(https://github.com/dsgiitr/adversarial_gen_demo/images/demo1.PNG)
+(/images/demo1.PNG)
 
 
 Installation

@@ -3,21 +3,21 @@ Source code for the website and the project to generate adversarial examples to 
 
 This is the repository for Visualizing and Comparision of Various Adversarial Attacks on user Uploaded Images using a User-Friendly interface using the DNN framework Pytorch, using popular SOTA Pretrained `TorchVision`  ModelZoo. The Following Attacks have been implemented so far and code can be found inside `GAE/attacks.py`
 
-* Fast Gradient Sign Method, Untargeted [1]
-* Fast Gradient Sign Method, Targeted [1]
-* Basic Iterative Method, Untargeted [2]
-* Least Likely Class Iterative Method [2]
-* DeepFool, untargeted [3]
-* LBFGS, targeted [4]
+1. FGSM
+	* Fast Gradient Sign Method, Untargeted
+	* Fast Gradient Sign Method, Targeted
+2. Iterative
+	* Basic Iterative Method, Untargeted
+	* Least Likely Class Iterative Method
+3. DeepFool, untargeted
+4. LBFGS, targeted
 
 Coming Soon: Carlini-Wagner l2, and Many More
 
 Screenshots
 -----------
 
-![Demo Image 1]
-(https://github.com/dsgiitr/adversarial_gen_demo/blob/master/images/demo1.PNG)
-
+![Demo Image 1](images/demo1.PNG)
 
 Installation
 ------------

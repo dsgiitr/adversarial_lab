@@ -12,6 +12,13 @@ This is the repository for Visualizing and Comparision of Various Adversarial At
 
 Coming Soon: Carlini-Wagner l2, and Many More
 
+Screenshots
+-----------
+
+![Demo Image 1]
+(/images/demo1.png)
+
+
 Installation
 ------------
 
@@ -37,6 +44,12 @@ $ python3 app.py
 ```
 
 Fire up your browser and navigate to `localhost:5000` or `your_server_url:5000`. Upload any image in JPG format, Select SOTA `torchvision` model and Adversarial Attack strategy. Experiment with the parameters for a particular algorithm and push 'Generate'. After a short while, the server returns Ajax response with Perturbed Image and Perturbation of the Original Image along with Top 5 Classified Labels for the Same. 
+
+GAE
+---
+
+It is a simple Pytorch Library containing Simple Fast implementations of Adversarial Attack Strategies using Pytorch. Cleverhans-Future and Advertorch can be referred for proper Robust implementations. GAE is easy to understand and only Processes a single image file at a time (as of now). Usage of the Following can be found on `Attacks Tutorial on Imagenet.ipynb` notebook. 
+
 
 Framework
 ---------

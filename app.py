@@ -7,7 +7,6 @@ import base64 as b64
 import commons
 import attack
 import torch
-import cv2
 import numpy as np
 from PIL import Image
 

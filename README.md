@@ -36,7 +36,7 @@ pip3 install -r requirements.txt
 Deploying webserver:
 --------------------
 
-After downloading the repo, run `python3 app.py`:
+After downloading the repo, run `flask run`:
 
 ```
 $ cd adversarial_lab
@@ -48,7 +48,7 @@ Fire up your browser and navigate to `localhost:5000` or `your_server_url:5000`.
 GAE
 ---
 
-It is a simple Pytorch Library containing Simple Fast implementations of Adversarial Attack Strategies using Pytorch. Cleverhans-Future and Advertorch can be referred for proper Robust implementations. GAE is easy to understand and only Processes a single image file at a time (as of now). Usage of the Following can be found on `Attacks Tutorial on Imagenet.ipynb` notebook. 
+It is a Pytorch Library containing Simple and Fast implementations of Adversarial Attack Strategies using Pytorch. Cleverhans-Future and Advertorch can be referred for proper Robust implementations. GAE is easy to understand and only Processes a single image file at a time (as of now). Usage of the Following can be found on `Attacks Tutorial on Imagenet.ipynb` notebook.
 
 
 Framework

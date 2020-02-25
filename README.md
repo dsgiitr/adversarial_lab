@@ -14,10 +14,7 @@ This is the repository for Visualizing and Comparision of Various Adversarial At
 
 Coming Soon: Carlini-Wagner l2, and Many More
 
-Screenshots
------------
-
-![Demo Image 1](images/demo1.PNG)
+<center><img src="https://dsgiitr.com/images/work/adversarial_example.gif"></center>
 
 Installation
 ------------
@@ -56,4 +53,3 @@ Framework
 	- Python `Flask`-based server
 		- Python backend allows access to Pytorch 
 	- Front-end using JQuery and Bootstrap
-

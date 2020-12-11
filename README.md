@@ -21,12 +21,12 @@ Installation
 
 Clone the git repository :
 
-```
+```git
 git clone https://github.com/dsgiitr/adversarial_lab.git
 ```
 Python 3 with Pytorch 1.4.0 is the primary requirement. The `requirements.txt` file contains a listing of required Python packages; to install all requirements, run the following:
 
-```
+```bash
 pip3 install -r requirements.txt
 ```
 
@@ -35,7 +35,7 @@ Deploying webserver:
 
 After downloading the repo, run `flask run`:
 
-```
+```bash
 $ cd adversarial_lab
 $ flask run
 ```
